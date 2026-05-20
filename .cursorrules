@@ -263,17 +263,28 @@ export default async function Page() {
 
 The `<div>` with `dangerouslySetInnerHTML` lives inside `<ArticleShell>`, which wraps it in `.prose-article max-w-[70ch]`. `<RelatedArticles>` is rendered by ArticleShell at the end, INSIDE `.prose-article` but using its own `not-prose` wrapper. Don't fold related-articles markup into the adopted HTML body.
 
-## 11. Credentials
+## 11. Credentials (CJGEO_API_KEY)
 
-API keys are not in this repo. Pull them via `vercel env pull` (the key was added to Production + Preview):
+API keys are NOT in this repo. The cloud VM does NOT have interactive Vercel auth — `vercel env pull` triggers a device-login OAuth wait and CANNOT complete here. Do NOT try it.
 
-```bash
-vercel env pull .env.local --environment=production --yes
+**Canonical path:** the chaperone (the orchestrator that dispatched this agent) supplies `CJGEO_API_KEY` via the followup message body, prefixed with the magic line:
+
+```
+CJGEO_API_KEY=<value>
 ```
 
-Then `.env.local` will have `CJGEO_API_KEY`. Load via `node --env-file=.env.local` for any one-shot script. Also `vercel link` may be required first if the project isn't linked — it is `bryanblog` under team `cjs-projects-963e3b09`.
+When you see that line in any user/follow-up message:
 
-If `vercel env pull` is not authorized in the cloud VM, the task is blocked: report it via the dispatcher path (see section 14). Do NOT hard-code the API key inline. Do NOT commit `.env.local` — `.gitignore` excludes it.
+1. Extract the value (everything after the `=` on that line, stripped of whitespace).
+2. Write a fresh `.env.local` at the repo root containing JUST that line:
+   ```
+   CJGEO_API_KEY=<value>
+   ```
+3. Use `node --env-file=.env.local <script>` for all CJGEO HTTP calls — the key flows through `process.env.CJGEO_API_KEY`.
+4. **Never commit `.env.local`** — `.gitignore` already excludes it. Confirm with `git status` before commit.
+5. **Never echo the raw key value** in your assistant messages, logs, or commit messages.
+
+If the initial task prompt did NOT include `CJGEO_API_KEY=...`, ask for it ONCE in your structured report (STATUS: blocked, BLOCKERS: "CJGEO_API_KEY not supplied in dispatch") and STOP. The chaperone will re-dispatch with the key inline.
 
 ## 12. Build-as-fix discipline
 
