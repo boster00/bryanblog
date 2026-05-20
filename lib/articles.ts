@@ -18,6 +18,9 @@ export const PILLAR: ArticleMeta = {
   title: "Will My Money Last in Retirement?",
   teaser:
     "The pillar guide: longevity, withdrawal plans, safe-vs-invested mix, and where annuities fit.",
+  source: "cjgeo",
+  cjgeoArticleId: "dd3d00e5-8538-4c74-a3da-f1d1e29ea96e",
+  mainKeyword: "will my money last in retirement",
 };
 
 export const SATELLITES: ArticleMeta[] = [
