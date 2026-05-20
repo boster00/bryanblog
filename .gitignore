@@ -20,3 +20,9 @@ tsconfig.tsbuildinfo
 
 # Local scratch / design refs
 tmp/
+
+# Local scratch scripts — `_*` prefix marks one-off / experimental
+scripts/_*.mjs
+scripts/_*.js
+scripts/.*.log
+
