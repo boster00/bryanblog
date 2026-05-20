@@ -44,6 +44,7 @@ export default async function Page() {
         relatedArticles={relatedFor([
           "annuity-fees-explained",
           "annuity-types-compared",
+          "portfolio-planning",
           "annuity-downsides",
         ])}
       >

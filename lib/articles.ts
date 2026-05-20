@@ -117,6 +117,15 @@ export const SATELLITES: ArticleMeta[] = [
     mainKeyword: "fixed vs indexed vs income annuity",
   },
   {
+    slug: "portfolio-planning",
+    href: "/retirement-income/portfolio-planning/",
+    title: "Retirement Income and Portfolio Planning",
+    teaser: "Build a portfolio that does the income job you need — predictable monthly checks, fewer market knocks.",
+    source: "cjgeo",
+    cjgeoArticleId: "825ce919-55d2-4e3b-9dfd-e870a0fc3a8c",
+    mainKeyword: "retirement income annuity",
+  },
+  {
     slug: "income-review-checklist",
     href: "/retirement-income/income-review-checklist/",
     title: "What to Bring to a Retirement Income Review",

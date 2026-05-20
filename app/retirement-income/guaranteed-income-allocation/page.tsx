@@ -43,6 +43,7 @@ export default async function Page() {
         sections={sections}
         relatedArticles={relatedFor([
           "retirement-paycheck",
+          "portfolio-planning",
           "annuity-types-compared",
           "income-review-checklist",
         ])}
