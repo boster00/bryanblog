@@ -15,12 +15,28 @@ export const metadata = {
   description: meta.teaser,
 };
 
+function decodeEntities(text: string): string {
+  return text
+    .replace(/&amp;/g, "&")
+    .replace(/&mdash;/g, "—")
+    .replace(/&ndash;/g, "–")
+    .replace(/&rsquo;/g, "’")
+    .replace(/&lsquo;/g, "‘")
+    .replace(/&rdquo;/g, "”")
+    .replace(/&ldquo;/g, "“")
+    .replace(/&bull;/g, "•")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"');
+}
+
 function extractSections(html: string): ArticleSection[] {
   const sections: ArticleSection[] = [];
   const re = /<h2\s+id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/gi;
   let m: RegExpExecArray | null;
   while ((m = re.exec(html)) !== null) {
-    const heading = m[2].replace(/<[^>]*>/g, "").trim();
+    const heading = decodeEntities(m[2].replace(/<[^>]*>/g, "")).trim();
     sections.push({ id: m[1], heading });
   }
   return sections;
