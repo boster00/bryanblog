@@ -372,6 +372,281 @@ nav.is-scrolled {
 }
 
 /* ──────────────────────────────────────────────────────────────
+ * Structural elements adopted from CJGEO source HTML.
+ *
+ * The CJGEO sanitizer (lib/sanitize-cjgeo.mjs) preserves a curated allowlist
+ * of class names on wrapper elements (callout, comparison-wrap, income-layers,
+ * income-layer/layer-content/layer-label, checklist + check-icon, ind badges).
+ * The styles below give those classes bryanblog's editorial language:
+ *   - warm-paper panel variants for callouts
+ *   - terracotta header row + striped rows for comparison tables
+ *   - slate-navy gradient layered visual for the income-layers framework
+ *   - terracotta checkmark icons for checklists
+ *   - colored pill badges for the comparison-table indicators
+ *
+ * All selectors are nested under `.prose-article` so they coexist with the
+ * default prose typography without leaking outside article bodies.
+ * ────────────────────────────────────────────────────────────── */
+
+/* ── Callout boxes ────────────────────────────────────────────── */
+.prose-article .callout {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.75rem;
+  border-left: 4px solid var(--color-primary);
+  background: rgba(28, 66, 89, 0.05);
+}
+.prose-article .callout-blue {
+  border-left-color: var(--color-primary);
+  background: rgba(28, 66, 89, 0.05);
+}
+.prose-article .callout-warm {
+  border-left-color: var(--color-accent);
+  background: rgba(244, 217, 201, 0.45); /* accent-tint @ 45% */
+}
+.prose-article .callout-title {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin: 0 0 0.65rem 0;
+}
+.prose-article .callout-warm .callout-title {
+  color: var(--color-accent);
+}
+.prose-article .callout p {
+  margin: 0 0 0.65rem 0;
+  font-size: 1rem;
+}
+.prose-article .callout p:last-child {
+  margin-bottom: 0;
+}
+.prose-article .callout p:first-of-type::first-letter {
+  /* opt out of drop-cap inside callouts */
+  font-family: inherit;
+  float: none;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+}
+.prose-article .callout p:first-of-type {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ── Comparison table wrapper (table + colored cell badges) ──── */
+.prose-article .comparison-wrap {
+  margin: 2rem 0;
+  border: 1px solid rgba(181, 169, 154, 0.45);
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(28, 66, 89, 0.04),
+    0 6px 18px -10px rgba(28, 66, 89, 0.08);
+}
+.prose-article .comparison-wrap table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 560px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  margin: 0;
+}
+.prose-article .comparison-wrap thead tr {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+.prose-article .comparison-wrap thead th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-family: var(--font-sans);
+  color: #ffffff;
+  border: none;
+}
+.prose-article .comparison-wrap tbody tr:nth-child(even) {
+  background: rgba(181, 169, 154, 0.10);
+}
+.prose-article .comparison-wrap tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+.prose-article .comparison-wrap tbody td {
+  padding: 0.7rem 1rem;
+  vertical-align: top;
+  color: #44403c;
+  border-bottom: 1px solid rgba(181, 169, 154, 0.30);
+  line-height: 1.55;
+}
+.prose-article .comparison-wrap tbody tr:last-child td {
+  border-bottom: none;
+}
+.prose-article .comparison-wrap tbody td strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Bare tables (no .comparison-wrap) — still readable. */
+.prose-article table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.75rem 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  border: 1px solid rgba(181, 169, 154, 0.35);
+  border-radius: 0.5rem;
+}
+.prose-article table thead tr {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+.prose-article table thead th {
+  padding: 0.75rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-primary);
+  border-bottom: 1px solid rgba(181, 169, 154, 0.45);
+}
+.prose-article table tbody td {
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid rgba(181, 169, 154, 0.22);
+  vertical-align: top;
+}
+.prose-article table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── .ind badges (inline pill labels in comparison cells) ────── */
+.prose-article .ind {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.25rem;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.prose-article .ind-good {
+  background: #d1ead3;
+  color: #1f5a24;
+}
+.prose-article .ind-moderate {
+  background: #fef3c7;
+  color: #7c5010;
+}
+.prose-article .ind-limited {
+  background: #fde8e8;
+  color: #7a1f1f;
+}
+.prose-article .ind-yes {
+  background: #d1ead3;
+  color: #1f5a24;
+}
+.prose-article .ind-no {
+  background: #fde8e8;
+  color: #7a1f1f;
+}
+
+/* ── Layered income visual (stacked colored layer cards) ────── */
+.prose-article .income-layers {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.prose-article .income-layer {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(28, 66, 89, 0.08);
+  border: 1px solid rgba(181, 169, 154, 0.30);
+}
+.prose-article .layer-label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4rem;
+  padding: 0.7rem 0.6rem;
+  text-align: center;
+  line-height: 1.2;
+}
+.prose-article .layer-content {
+  background: #ffffff;
+  padding: 0.85rem 1.1rem;
+  flex: 1;
+  border-left: 1px solid rgba(181, 169, 154, 0.30);
+}
+.prose-article .layer-content strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.prose-article .layer-content span {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: #57534e; /* stone-600 */
+  line-height: 1.5;
+}
+/* Slate-navy gradient: foundation (1) deepest → flex (6) lightest. */
+.prose-article .income-layer.layer-1 .layer-label { background: #1C4259; }
+.prose-article .income-layer.layer-2 .layer-label { background: #24546F; }
+.prose-article .income-layer.layer-3 .layer-label { background: #2D6685; }
+.prose-article .income-layer.layer-4 .layer-label { background: #4081A2; }
+.prose-article .income-layer.layer-5 .layer-label { background: #5C9CBA; }
+.prose-article .income-layer.layer-6 .layer-label { background: #7CB4CC; }
+
+/* ── Checklist (used inside §6 question lists) ────────────── */
+.prose-article ul.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+.prose-article ul.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.45rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.prose-article ul.checklist li::marker {
+  content: "";
+  color: transparent;
+}
+.prose-article ul.checklist .check-icon {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.18rem;
+  /* color override happens via stroke attr on the svg, but allow accent overlay */
+}
+.prose-article ul.checklist li strong {
+  color: var(--color-primary);
+}
+
+/* ──────────────────────────────────────────────────────────────
  * Pillar table of contents
  * ────────────────────────────────────────────────────────────── */
 .pillar-toc {
