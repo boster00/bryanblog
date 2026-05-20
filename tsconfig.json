@@ -34,9 +34,6 @@
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules",
-    "_archive",
-    "libs/reference-for-ai",
-    "tests"
+    "node_modules"
   ]
 }

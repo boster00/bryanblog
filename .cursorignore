@@ -1,3 +1,0 @@
-# Exclude archived and generated code from Cursor indexing
-_archive/
-base44_generated_code/

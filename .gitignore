@@ -1,12 +1,3 @@
-# ... existing content ...
-
-# Test coverage
-coverage/
-.nyc_output/
-
-# Vitest
-.vitest/
-
 # Next.js build output
 .next/
 out/
@@ -18,5 +9,11 @@ node_modules/
 .env.local
 .env*.local
 
-# Playwright shared browser sessions (secrets — never commit)
-playwright/.auth/
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
