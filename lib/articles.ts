@@ -126,6 +126,16 @@ export const SATELLITES: ArticleMeta[] = [
     mainKeyword: "retirement income annuity",
   },
   {
+    slug: "portfolio-planning-2",
+    href: "/retirement-income/portfolio-planning-2/",
+    title: "Retirement Income and Portfolio Planning - 2",
+    teaser:
+      "Layer Social Security, savings, and guaranteed income so your plan can handle market dips without panic moves.",
+    source: "cjgeo",
+    cjgeoArticleId: "949300ec-65e8-46c9-8b00-8bba89d2c0ab",
+    mainKeyword: "retirement income annuity portfolio",
+  },
+  {
     slug: "income-review-checklist",
     href: "/retirement-income/income-review-checklist/",
     title: "What to Bring to a Retirement Income Review",
