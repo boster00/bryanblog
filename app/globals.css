@@ -243,12 +243,12 @@ nav.is-scrolled {
   margin: 0 0 1.5rem 0;
 }
 
-.prose-article > p:first-of-type {
+.prose-article p:first-of-type {
   font-size: 1.125rem;
   color: #292524;
 }
 
-.prose-article > p:first-of-type::first-letter {
+.prose-article p:first-of-type::first-letter {
   font-family: var(--font-serif);
   float: left;
   font-size: 4.5rem;
