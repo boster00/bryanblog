@@ -5,7 +5,7 @@ import RelatedArticles from "@/components/RelatedArticles";
 export const metadata = {
   title: "Design Guide",
   description:
-    "Brand principles, design tokens, components, and article patterns for bryanblog.",
+    "Brand principles, design tokens, components, and article patterns for The Mysterious Author.",
 };
 
 /* ──────────────────────────────────────────────────────────────
@@ -162,7 +162,7 @@ export default function DesignGuidePage() {
           Design Guide
         </h1>
         <p className="mt-5 text-lg text-stone-700 leading-relaxed">
-          How bryanblog looks, sounds, and feels.
+          How The Mysterious Author looks, sounds, and feels.
         </p>
       </header>
 
@@ -404,7 +404,7 @@ export default function DesignGuidePage() {
               })}
             </div>
             <p className="text-sm text-stone-600 mt-5 leading-relaxed">
-              bryanblog uses Tailwind's default 4-px-based spacing scale —
+              The Mysterious Author uses Tailwind's default 4-px-based spacing scale —
               nothing custom. Cards favor p-8; prose favors generous vertical
               rhythm (mb-6 to mb-10).
             </p>

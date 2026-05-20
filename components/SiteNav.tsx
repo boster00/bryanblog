@@ -18,7 +18,7 @@ export default function SiteNav() {
               color: "var(--color-primary)",
             }}
           >
-            Bryan Blog
+            The Mysterious Author
           </span>
         </Link>
 

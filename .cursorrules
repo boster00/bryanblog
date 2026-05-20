@@ -10,7 +10,8 @@ that skipping ahead burns build cycles.
 ## 1. What bryanblog is
 
 A Next.js 15 (app router) + React 19 + Tailwind 4 + TypeScript static content site for
-Bryan, a retirement-planning advisor. Audience: 55–75-year-olds anxious about running out
+an anonymous retirement-planning advisor (branded "The Mysterious Author" on the site).
+Audience: 55–75-year-olds anxious about running out
 of money. Voice: calm, plain English, 8th-grade reading level, compliance-conservative.
 Live at https://bryanblog.vercel.app/. Auto-deploys from `main`.
 

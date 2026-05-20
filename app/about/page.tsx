@@ -13,7 +13,7 @@ const meta = UTILITY_ARTICLES.about;
 export const metadata = {
   title: meta.title,
   description:
-    "A small library of plain-English guides on retirement income planning — what Bryan Blog is, who it's for, and how to get started.",
+    "A small library of plain-English guides on retirement income planning — what this blog is, who it's for, and how to get started.",
 };
 
 export default async function AboutPage() {

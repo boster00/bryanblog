@@ -163,7 +163,7 @@ export type UtilityArticleMeta = {
 export const UTILITY_ARTICLES: Record<string, UtilityArticleMeta> = {
   about: {
     key: "about",
-    title: "About Bryan Blog",
+    title: "About This Blog",
     source: "cjgeo",
     cjgeoArticleId: "77e09fcb-2efc-44c8-a473-46f6ec01a44a",
     mainKeyword: "about retirement income blog plain english",
@@ -172,7 +172,7 @@ export const UTILITY_ARTICLES: Record<string, UtilityArticleMeta> = {
   },
   contact: {
     key: "contact",
-    title: "Contact Bryan",
+    title: "Contact the Author",
     source: "cjgeo",
     cjgeoArticleId: "90c0f8b3-4dda-47ea-be01-ecbb92727c6e",
     mainKeyword: "request retirement income review",

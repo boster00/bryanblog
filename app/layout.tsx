@@ -20,8 +20,8 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: "Bryan Blog — Plan Retirement Income With Confidence",
-    template: "%s | Bryan Blog",
+    default: "The Mysterious Author — Plan Retirement Income With Confidence",
+    template: "%s | The Mysterious Author",
   },
   description:
     "Plain-English answers about retirement income, annuities, and the trade-offs between safety and growth.",

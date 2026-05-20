@@ -36,7 +36,7 @@ export default async function ContactPage() {
             className="rounded-2xl bg-white p-7 md:p-9 border shadow-[0_10px_30px_-18px_rgba(28,66,89,0.18)]"
             style={{ borderColor: "rgba(28, 66, 89, 0.18)" }}
           >
-            <p className="eyebrow mb-3">Send Bryan a note</p>
+            <p className="eyebrow mb-3">Send a note</p>
             <h2
               className="text-2xl md:text-[1.625rem] font-semibold tracking-tight leading-tight"
               style={{
