@@ -1,0 +1,56 @@
+Plan: regen 2 articles serially.
+Slugs: monthly-income-needs, annuity-types-compared
+
+
+=== monthly-income-needs (satellite) ===
+  → create article title="How Much Monthly Income Do I Need in Retirement?" seed="how much monthly income do I need in retirement"
+  article_id=253c5ee8-1704-4b6e-88d1-d2fb839cb16c
+    [kw] set_main_keyword="retirement income"
+    [kw] full_auto attempt=fallback
+    [kw] kept=6
+    [topic] full_auto attempt=first
+    [topic] kept=5
+    [prompt] kept=5
+  [assets] kw=6 topics=5
+  → generate_draft
+  → poll (up to 20 min, 60s cadence)
+    [poll 253c5ee8] status=not_ready elapsed=3s
+    [poll 253c5ee8] status=not_ready elapsed=64s
+    [poll 253c5ee8] status=not_ready elapsed=126s
+    [poll 253c5ee8] status=not_ready elapsed=188s
+    [poll 253c5ee8] status=ready elapsed=251s
+  → adopt_draft
+  → get_html
+  raw_html_length=49485
+  ✓ wrote content/retirement-income/monthly-income-needs.html (14009 bytes)
+  …15s rest before next article…
+
+=== annuity-types-compared (satellite) ===
+  → create article title="Fixed Annuity vs Fixed Indexed Annuity vs Income Annuity" seed="fixed vs indexed vs income annuity"
+  article_id=96b4d588-2eb9-46a0-9fc3-c0a2465abf34
+    [kw] set_main_keyword="annuity types"
+    [kw] full_auto attempt=fallback
+    [kw] kept=4
+    [topic] full_auto attempt=first
+    [topic] kept=5
+    [prompt] kept=5
+  [assets] kw=4 topics=5
+  → generate_draft
+  → poll (up to 20 min, 60s cadence)
+    [poll 96b4d588] status=not_ready elapsed=2s
+    [poll 96b4d588] status=not_ready elapsed=68s
+    [poll 96b4d588] status=not_ready elapsed=131s
+    [poll 96b4d588] status=ready elapsed=202s
+  → adopt_draft
+  → get_html
+  raw_html_length=30130
+  ✓ wrote content/retirement-income/annuity-types-compared.html (11017 bytes)
+
+→ patched lib/articles.ts for 2 articles
+
+=== FINAL ===
+Processed: 2
+Successes: 2
+Blocked:   0
+
+Manifest: scripts/_regen-manifest.json

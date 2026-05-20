@@ -1,0 +1,31 @@
+{
+  "at": "2026-05-20T18:21:18.308Z",
+  "results": [
+    {
+      "ok": true,
+      "slug": "monthly-income-needs",
+      "articleId": "253c5ee8-1704-4b6e-88d1-d2fb839cb16c",
+      "seedUsed": "retirement income",
+      "seedKind": "fallback",
+      "keptKw": 6,
+      "keptTopic": 5,
+      "keptPrompt": 5,
+      "htmlBytes": 14009,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/monthly-income-needs.html"
+    },
+    {
+      "ok": true,
+      "slug": "annuity-types-compared",
+      "articleId": "96b4d588-2eb9-46a0-9fc3-c0a2465abf34",
+      "seedUsed": "annuity types",
+      "seedKind": "fallback",
+      "keptKw": 4,
+      "keptTopic": 5,
+      "keptPrompt": 5,
+      "htmlBytes": 11017,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/annuity-types-compared.html"
+    }
+  ]
+}

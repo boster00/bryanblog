@@ -1,0 +1,171 @@
+{
+  "at": "2026-05-20T18:11:18.419Z",
+  "results": [
+    {
+      "ok": true,
+      "slug": "monthly-income-needs",
+      "articleId": "74776db0-a739-4879-8564-94ebaab8f525",
+      "seedUsed": "retirement income",
+      "seedKind": "fallback",
+      "keptKw": 6,
+      "keptTopic": 7,
+      "keptPrompt": 5,
+      "htmlBytes": 152,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/monthly-income-needs.html"
+    },
+    {
+      "ok": true,
+      "slug": "retirement-paycheck",
+      "articleId": "c5f8abb9-4caf-495f-a832-447c425ac713",
+      "seedUsed": "retirement paycheck",
+      "seedKind": "fallback",
+      "keptKw": 4,
+      "keptTopic": 5,
+      "keptPrompt": 5,
+      "htmlBytes": 14034,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/retirement-paycheck.html"
+    },
+    {
+      "ok": true,
+      "slug": "move-money-before-retirement",
+      "articleId": "d03cde8c-5aca-43ab-80f9-9bc898cb81f8",
+      "seedUsed": "pre retirement portfolio",
+      "seedKind": "fallback",
+      "keptKw": 1,
+      "keptTopic": 5,
+      "keptPrompt": 5,
+      "htmlBytes": 14206,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/move-money-before-retirement.html"
+    },
+    {
+      "ok": true,
+      "slug": "cds-bonds-annuities",
+      "articleId": "5c1c8043-ef29-4675-bfdd-fd457a85a849",
+      "seedUsed": "safe retirement investments",
+      "seedKind": "fallback",
+      "keptKw": 4,
+      "keptTopic": 5,
+      "keptPrompt": 5,
+      "htmlBytes": 15611,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/cds-bonds-annuities.html"
+    },
+    {
+      "ok": true,
+      "slug": "annuity-fees-explained",
+      "articleId": "01a03fa4-6eec-41c5-ad11-1de0dfaa26b6",
+      "seedUsed": "annuity fees",
+      "seedKind": "fallback",
+      "keptKw": 6,
+      "keptTopic": 4,
+      "keptPrompt": 5,
+      "htmlBytes": 10535,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/annuity-fees-explained.html"
+    },
+    {
+      "ok": true,
+      "slug": "who-should-consider-annuity",
+      "articleId": "0163f112-01e1-4954-b63b-6c257fc69564",
+      "seedUsed": "annuity suitability",
+      "seedKind": "fallback",
+      "keptKw": 8,
+      "keptTopic": 6,
+      "keptPrompt": 5,
+      "htmlBytes": 11548,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/who-should-consider-annuity.html"
+    },
+    {
+      "ok": true,
+      "slug": "guaranteed-income-allocation",
+      "articleId": "2a6ef640-8b5a-4da6-864c-c976e3b6e6ac",
+      "seedUsed": "guaranteed retirement income",
+      "seedKind": "fallback",
+      "keptKw": 6,
+      "keptTopic": 5,
+      "keptPrompt": 5,
+      "htmlBytes": 13737,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/guaranteed-income-allocation.html"
+    },
+    {
+      "ok": true,
+      "slug": "compare-annuity-options",
+      "articleId": "83ae9418-1798-4a4d-9238-ad3ae1572a92",
+      "seedUsed": "annuity comparison",
+      "seedKind": "fallback",
+      "keptKw": 7,
+      "keptTopic": 5,
+      "keptPrompt": 3,
+      "htmlBytes": 13760,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/compare-annuity-options.html"
+    },
+    {
+      "ok": false,
+      "slug": "annuity-types-compared",
+      "reason": "fetch failed"
+    },
+    {
+      "ok": true,
+      "slug": "portfolio-planning-2",
+      "articleId": "ff1b1af3-20e6-41e5-bada-140bda7ea55d",
+      "seedUsed": "annuity portfolio",
+      "seedKind": "fallback",
+      "keptKw": 1,
+      "keptTopic": 6,
+      "keptPrompt": 3,
+      "htmlBytes": 14419,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/portfolio-planning-2.html"
+    },
+    {
+      "ok": true,
+      "slug": "income-review-checklist",
+      "articleId": "d362872f-23ac-424f-81a0-a771df51b2f8",
+      "seedUsed": "retirement income review",
+      "seedKind": "fallback",
+      "keptKw": 1,
+      "keptTopic": 5,
+      "keptPrompt": 5,
+      "htmlBytes": 12080,
+      "bryanLeaks": 0,
+      "contentPath": "content/retirement-income/income-review-checklist.html"
+    },
+    {
+      "ok": true,
+      "slug": "about",
+      "articleId": "0be37653-7ab3-4aa1-8ebf-de12da714514",
+      "seedUsed": "retirement planning blog",
+      "seedKind": "fallback",
+      "keptKw": 5,
+      "keptTopic": 9,
+      "keptPrompt": 5,
+      "htmlBytes": 12926,
+      "bryanLeaks": 0,
+      "contentPath": "content/about/index.html"
+    },
+    {
+      "ok": true,
+      "slug": "contact",
+      "articleId": "c1576088-5313-43ed-8b8d-ac806ac1278e",
+      "seedUsed": "retirement income review",
+      "seedKind": "fallback",
+      "keptKw": 1,
+      "keptTopic": 10,
+      "keptPrompt": 5,
+      "htmlBytes": 12745,
+      "bryanLeaks": 0,
+      "contentPath": "content/contact/intro.html"
+    },
+    {
+      "ok": false,
+      "slug": "home-why",
+      "reason": "keyword kept=0 after all 4 attempts"
+    }
+  ]
+}

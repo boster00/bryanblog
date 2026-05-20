@@ -1,0 +1,17 @@
+Plan: regen 14 articles serially.
+Slugs: monthly-income-needs, retirement-paycheck, move-money-before-retirement, cds-bonds-annuities, annuity-fees-explained, who-should-consider-annuity, guaranteed-income-allocation, compare-annuity-options, annuity-types-compared, portfolio-planning-2, income-review-checklist, about, contact, home-why
+
+
+=== monthly-income-needs (satellite) ===
+  → create article title="How Much Monthly Income Do I Need in Retirement?" seed="how much monthly income do I need in retirement"
+  article_id=d9b82315-5ccd-4488-87f5-c3c80c5e8b7b
+    [kw] set_main_keyword="retirement income"
+    [kw] full_auto attempt=fallback
+    [kw] kept=6
+    [topic] full_auto attempt=first
+    [topic] kept=5
+    [prompt] kept=5
+  [assets] kw=6 topics=5
+  → generate_draft
+  → poll (up to 20 min, 60s cadence)
+    [poll d9b82315] status=not_ready elapsed=6s
