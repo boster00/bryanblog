@@ -23,11 +23,11 @@ function Section({ id, name, subtitle, children }: SectionProps) {
   return (
     <section
       id={id}
-      className="rounded-2xl border border-[var(--color-neutral-mid)]/30 bg-white p-8 shadow-sm space-y-6 scroll-mt-28"
+      className="section-card space-y-7 scroll-mt-24"
     >
       <header>
         <h2
-          className="font-serif text-3xl tracking-tight"
+          className="text-3xl md:text-4xl tracking-tight font-semibold"
           style={{
             fontFamily: "var(--font-serif)",
             color: "var(--color-primary)",
@@ -35,9 +35,9 @@ function Section({ id, name, subtitle, children }: SectionProps) {
         >
           {name}
         </h2>
-        <p className="text-stone-600 mt-1">{subtitle}</p>
+        <p className="text-stone-600 mt-2 text-[15px] leading-relaxed">{subtitle}</p>
       </header>
-      <hr className="border-[var(--color-neutral-mid)]/30" />
+      <hr className="editorial-divider" />
       <div>{children}</div>
     </section>
   );
@@ -148,17 +148,12 @@ const TOC: { id: string; label: string }[] = [
 
 export default function DesignGuidePage() {
   return (
-    <main className="max-w-6xl mx-auto px-6 py-16 md:py-20">
+    <main className="max-w-6xl mx-auto px-6 py-14 md:py-20">
       {/* Header */}
-      <header className="mb-12 md:mb-16">
-        <p
-          className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3"
-          style={{ color: "var(--color-accent)" }}
-        >
-          Internal · Brand Reference
-        </p>
+      <header className="mb-12 md:mb-16 max-w-3xl">
+        <p className="eyebrow mb-4">Internal · Brand Reference</p>
         <h1
-          className="text-4xl md:text-5xl font-semibold tracking-tight"
+          className="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.02]"
           style={{
             fontFamily: "var(--font-serif)",
             color: "var(--color-primary)",
@@ -166,12 +161,12 @@ export default function DesignGuidePage() {
         >
           Design Guide
         </h1>
-        <p className="mt-4 text-lg text-stone-700 max-w-2xl leading-relaxed">
+        <p className="mt-5 text-lg text-stone-700 leading-relaxed">
           How bryanblog looks, sounds, and feels.
         </p>
       </header>
 
-      <div className="grid md:grid-cols-[1fr_220px] gap-12">
+      <div className="grid md:grid-cols-[minmax(0,1fr)_220px] gap-12">
         {/* Body */}
         <div className="space-y-10">
           {/* 1. Principles */}
@@ -180,31 +175,22 @@ export default function DesignGuidePage() {
             name="Brand Principles"
             subtitle="Six rules every page honors."
           >
-            <ul className="space-y-5">
-              {PRINCIPLES.map((p) => (
-                <li
-                  key={p.headline}
-                  className="flex gap-4"
-                >
-                  <span
-                    aria-hidden
-                    className="mt-2 h-[2px] w-6 flex-none rounded-full"
-                    style={{ background: "var(--color-accent)" }}
-                  />
-                  <div>
-                    <p
-                      className="font-semibold"
-                      style={{ color: "var(--color-primary)" }}
-                    >
-                      {p.headline}
-                    </p>
-                    <p className="text-stone-700 mt-1 leading-relaxed">
-                      {p.body}
-                    </p>
-                  </div>
+            <ol className="grid gap-7 md:grid-cols-2 list-none p-0 m-0">
+              {PRINCIPLES.map((p, i) => (
+                <li key={p.headline} className="flex flex-col gap-2.5">
+                  <span aria-hidden className="terracotta-hairline" />
+                  <p
+                    className="font-semibold text-[1.0625rem] leading-snug"
+                    style={{ color: "var(--color-primary)" }}
+                  >
+                    {i + 1}. {p.headline}
+                  </p>
+                  <p className="text-stone-700 leading-relaxed text-[15px]">
+                    {p.body}
+                  </p>
                 </li>
               ))}
-            </ul>
+            </ol>
           </Section>
 
           {/* 2. Colors */}

@@ -92,23 +92,63 @@ nav.is-scrolled {
   background-size: 22px 22px;
 }
 
-/* ── Warm shadow card ── */
+/* ── Editorial card — rounded-2xl white, soft layered shadow, taupe hairline ── */
 .warm-card {
   background: #ffffff;
-  border-radius: 1.25rem;
+  border-radius: 1rem;
   padding: 1.75rem;
+  border: 1px solid rgba(181, 169, 154, 0.22);
   box-shadow:
-    0 1px 0 rgba(28, 66, 89, 0.05),
-    0 4px 24px rgba(28, 66, 89, 0.06),
-    0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: box-shadow 0.4s ease, transform 0.4s ease;
+    0 1px 2px rgba(28, 66, 89, 0.05),
+    0 8px 24px -12px rgba(28, 66, 89, 0.08);
+  transition: box-shadow 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
 }
 .warm-card:hover {
+  border-color: rgba(140, 58, 46, 0.28);
   box-shadow:
-    0 1px 0 rgba(28, 66, 89, 0.06),
-    0 12px 40px rgba(28, 66, 89, 0.10),
-    0 2px 4px rgba(0, 0, 0, 0.05);
-  transform: translateY(-3px);
+    0 1px 2px rgba(28, 66, 89, 0.06),
+    0 16px 40px -16px rgba(28, 66, 89, 0.14);
+  transform: translateY(-2px);
+}
+
+/* ── Editorial section card — used by design-guide sections ── */
+.section-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(181, 169, 154, 0.22);
+  padding: 2.25rem;
+  box-shadow:
+    0 1px 2px rgba(28, 66, 89, 0.04),
+    0 12px 32px -16px rgba(28, 66, 89, 0.08);
+}
+@media (min-width: 768px) {
+  .section-card { padding: 2.75rem; }
+}
+
+/* ── Eyebrow utility — small caps, tracked, accent ── */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* ── Terracotta hairline — short rule under headings/principle items ── */
+.terracotta-hairline {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 1px;
+}
+
+/* ── Editorial divider — thin warm-taupe rule ── */
+.editorial-divider {
+  height: 1px;
+  background: rgba(181, 169, 154, 0.35);
+  border: 0;
 }
 
 /* ── Hero cinematic gradient overlay ── */
@@ -184,7 +224,8 @@ nav.is-scrolled {
   color: #292524; /* stone-800 */
   font-family: var(--font-sans);
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.7;
+  max-width: 70ch;
 }
 
 .prose-article h1 {
@@ -213,7 +254,7 @@ nav.is-scrolled {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 2.5rem;
+  width: 3rem;
   height: 2px;
   background: #8C3A2E;
   border-radius: 1px;
@@ -244,19 +285,22 @@ nav.is-scrolled {
 }
 
 .prose-article p:first-of-type {
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
+  line-height: 1.65;
   color: #292524;
 }
 
 .prose-article p:first-of-type::first-letter {
   font-family: var(--font-serif);
   float: left;
-  font-size: 4.5rem;
-  line-height: 0.8;
-  padding-right: 0.65rem;
-  padding-top: 0.4rem;
+  font-size: 4.75rem;
+  line-height: 0.85;
+  padding-right: 0.6rem;
+  padding-top: 0.5rem;
+  margin-right: 0.1rem;
   color: #8C3A2E;
   font-weight: 600;
+  font-style: normal;
 }
 
 .prose-article strong {

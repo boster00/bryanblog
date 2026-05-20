@@ -26,9 +26,10 @@ export default async function RetirementIncomePillar() {
   return (
     <main>
       <ArticleShell
-        eyebrow="Pillar Guide"
+        eyebrow="Retirement Income"
         title={PILLAR.title}
-        intro="The big-picture map. Each section answers a real question retirees ask, then points you to a deeper article when you're ready to dig in."
+        byline="Updated May 2026 · 14 min read"
+        intro="Most people who reach retirement have done their part — they saved, they worked, they planned. The question that keeps them up at night isn't whether they'll have enough to start; it's whether what they have will last."
         sections={sections}
         relatedArticles={relatedFor([
           "monthly-income-needs",
