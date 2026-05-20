@@ -619,7 +619,8 @@ nav.is-scrolled {
   padding: 0;
   margin: 1.5rem 0;
 }
-.prose-article ul.checklist li {
+.prose-article ul.checklist > li {
+  list-style: none;
   display: flex;
   align-items: flex-start;
   gap: 0.7rem;
@@ -628,7 +629,7 @@ nav.is-scrolled {
   line-height: 1.6;
   margin: 0;
 }
-.prose-article ul.checklist li::marker {
+.prose-article ul.checklist > li::marker {
   content: "";
   color: transparent;
 }
@@ -637,7 +638,6 @@ nav.is-scrolled {
   width: 1.25rem;
   height: 1.25rem;
   margin-top: 0.18rem;
-  /* color override happens via stroke attr on the svg, but allow accent overlay */
 }
 .prose-article ul.checklist li strong {
   color: var(--color-primary);
