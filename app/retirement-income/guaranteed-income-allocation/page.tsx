@@ -5,8 +5,9 @@
 
 import { promises as fs } from "fs";
 import path from "path";
-import ArticleShell, { ArticleSection } from "@/components/ArticleShell";
+import ArticleShell from "@/components/ArticleShell";
 import { getSatellite, relatedFor } from "@/lib/articles";
+import { extractSections } from "@/lib/sections";
 
 const meta = getSatellite("guaranteed-income-allocation")!;
 
@@ -14,17 +15,6 @@ export const metadata = {
   title: meta.title,
   description: meta.teaser,
 };
-
-function extractSections(html: string): ArticleSection[] {
-  const sections: ArticleSection[] = [];
-  const re = /<h2\s+id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/gi;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(html)) !== null) {
-    const heading = m[2].replace(/<[^>]*>/g, "").trim();
-    sections.push({ id: m[1], heading });
-  }
-  return sections;
-}
 
 export default async function Page() {
   const htmlPath = path.join(
