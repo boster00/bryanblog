@@ -1268,6 +1268,35 @@ nav.is-scrolled {
   height: 1.25rem;
 }
 
+/* ── Generated editorial diagrams (gpt-image-2 fill) ─────────── */
+.prose-article .diagram {
+  margin: 2rem auto;
+  text-align: center;
+  max-width: 720px;
+}
+.prose-article .diagram img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(28, 66, 89, 0.08);
+}
+.prose-article .diagram figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-neutral-mid);
+  font-style: italic;
+  font-family: var(--font-serif);
+}
+/* When a generated <figure> lives inside a structural diagram-placeholder
+   (e.g. above bucket cards), drop the placeholder's dashed border + padding
+   so the image sits flush. */
+.prose-article .diagram-placeholder:has(> .diagram) {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+
 /* ── Diagram / visual placeholders ───────────────────────────── */
 .prose-article .diagram-placeholder,
 .prose-article .visual-placeholder,
