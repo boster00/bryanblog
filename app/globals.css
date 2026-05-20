@@ -1488,6 +1488,45 @@ nav.is-scrolled {
   font-style: italic;
 }
 
+/* ── Inline SVG default sizing ──────────────────────────────────
+   CJGEO emits inline icon SVGs without explicit width/height. In
+   modern browsers these default to 300x150 or expand to container
+   width — both bad. Constrain to a small icon size by default and
+   let specific contexts override. */
+.prose-article svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+}
+.prose-article .callout__icon,
+.prose-article .callout__icon svg,
+.prose-article .check-list__icon,
+.prose-article .checklist__icon,
+.prose-article .check-icon,
+.prose-article .faq-icon,
+.prose-article .faq-chevron {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.prose-article .diagram-placeholder__icon,
+.prose-article .visual-module__icon,
+.prose-article .placeholder-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.prose-article .bucket__icon svg,
+.prose-article .bucket-card__icon svg {
+  width: 2rem;
+  height: 2rem;
+}
+.prose-article .hero-svg,
+.prose-article .hero-visual__icon {
+  /* belt-and-suspenders: hero SVGs would be dropped by sanitizer (chrome class), but just in case */
+  display: none;
+}
+
 /* ── Code / pre / mark / abbr ────────────────────────────────── */
 .prose-article code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
