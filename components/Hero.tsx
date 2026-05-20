@@ -22,7 +22,7 @@ export default function Hero({
   if (photoSrc) {
     return (
       <section className="relative overflow-hidden">
-        <div className="relative max-w-6xl mx-auto px-6 pt-14 pb-16 md:pt-20 md:pb-24 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,1.05fr)] gap-10 md:gap-14 items-center">
+        <div className="relative max-w-6xl mx-auto px-6 pt-10 pb-14 md:pt-14 md:pb-20 grid grid-cols-1 md:grid-cols-[1fr_minmax(0,1.05fr)] gap-10 md:gap-14 items-center">
           <div className="md:pr-2">
             {eyebrow && <p className="eyebrow mb-5">{eyebrow}</p>}
             <h1
@@ -69,7 +69,7 @@ export default function Hero({
   // Fallback: text-only hero
   return (
     <section className="relative overflow-hidden">
-      <div className="relative max-w-5xl mx-auto px-6 py-20 md:py-28">
+      <div className="relative max-w-5xl mx-auto px-6 py-14 md:py-20">
         {eyebrow && <p className="eyebrow mb-5">{eyebrow}</p>}
         <h1
           className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl"

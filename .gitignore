@@ -17,3 +17,6 @@ tsconfig.tsbuildinfo
 .DS_Store
 .vscode/
 .idea/
+
+# Local scratch / design refs
+tmp/

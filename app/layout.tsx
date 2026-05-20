@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body className="min-h-screen flex flex-col">
         <SiteNav />
-        <div className="flex-1 pt-20">{children}</div>
+        <div className="flex-1">{children}</div>
         <SiteFooter />
       </body>
     </html>

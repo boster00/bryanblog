@@ -28,7 +28,7 @@ export default function ArticleShell({
 }: ArticleShellProps) {
   return (
     <article className="relative">
-      <div className="max-w-6xl mx-auto px-6 pt-10 pb-16 md:pt-14 md:pb-24 grid grid-cols-1 lg:grid-cols-[14rem_minmax(0,1fr)] gap-10 lg:gap-14">
+      <div className="max-w-6xl mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-24 grid grid-cols-1 lg:grid-cols-[14rem_minmax(0,1fr)] gap-10 lg:gap-14">
         {/* Sticky LEFT-rail TOC (desktop) */}
         {sections.length > 0 && (
           <aside className="hidden lg:block">
