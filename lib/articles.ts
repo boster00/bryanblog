@@ -19,7 +19,7 @@ export const PILLAR: ArticleMeta = {
   teaser:
     "The pillar guide: longevity, withdrawal plans, safe-vs-invested mix, and where annuities fit.",
   source: "cjgeo",
-  cjgeoArticleId: "dd3d00e5-8538-4c74-a3da-f1d1e29ea96e",
+  cjgeoArticleId: "46f22071-6075-417f-b4dc-37c32aa3510f",
   mainKeyword: "will my money last in retirement",
 };
 
@@ -67,7 +67,7 @@ export const SATELLITES: ArticleMeta[] = [
     title: "What Are the Downsides of Annuities?",
     teaser: "The real trade-offs: complexity, fees, surrender, and lost upside.",
     source: "cjgeo",
-    cjgeoArticleId: "01a3440b-e858-4d5e-ae71-0323044eaa4e",
+    cjgeoArticleId: "dc22d86a-3cd0-4d7f-9041-5e0d9a8ea6f0",
     mainKeyword: "annuity downsides",
   },
   {
@@ -122,7 +122,7 @@ export const SATELLITES: ArticleMeta[] = [
     title: "Retirement Income and Portfolio Planning",
     teaser: "Build a portfolio that does the income job you need — predictable monthly checks, fewer market knocks.",
     source: "cjgeo",
-    cjgeoArticleId: "825ce919-55d2-4e3b-9dfd-e870a0fc3a8c",
+    cjgeoArticleId: "01c3334a-4f13-4a62-95d7-25bc784e74a5",
     mainKeyword: "retirement income annuity",
   },
   {
