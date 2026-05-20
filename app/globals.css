@@ -1321,6 +1321,43 @@ nav.is-scrolled {
   color: #57534e;
   margin-top: 0.55rem;
 }
+
+/* Opt out of the article-level drop-cap inside structural boxes so the
+   "first paragraph" inside a callout/stat-card/bucket/placeholder doesn't
+   get a giant first letter. */
+.prose-article .diagram-placeholder p::first-letter,
+.prose-article .visual-placeholder p::first-letter,
+.prose-article .visual-module p::first-letter,
+.prose-article .proof-visual p::first-letter,
+.prose-article .bucket p::first-letter,
+.prose-article .bucket-card p::first-letter,
+.prose-article .compare-card p::first-letter,
+.prose-article .compare-col p::first-letter,
+.prose-article .stat-card p::first-letter,
+.prose-article .stat-item p::first-letter,
+.prose-article .stat-cell p::first-letter,
+.prose-article .takeaway p::first-letter,
+.prose-article .timeline p::first-letter,
+.prose-article .faq-item p::first-letter,
+.prose-article details p::first-letter,
+.prose-article .pullquote p::first-letter,
+.prose-article .pull-quote p::first-letter,
+.prose-article .compliance p::first-letter,
+.prose-article .compliance-box p::first-letter,
+.prose-article .compliance-note p::first-letter,
+.prose-article .disclaimer p::first-letter,
+.prose-article .caution p::first-letter,
+.prose-article blockquote p::first-letter {
+  font-family: inherit;
+  float: none;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+}
 .prose-article .proof-visual__timeline {
   display: flex;
   align-items: center;
