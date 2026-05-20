@@ -592,6 +592,10 @@ nav.is-scrolled {
   padding: 0.85rem 1.1rem;
   flex: 1;
   border-left: 1px solid rgba(181, 169, 154, 0.30);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: #57534e; /* stone-600 description text */
+  line-height: 1.5;
 }
 .prose-article .layer-content strong {
   display: block;
@@ -600,13 +604,6 @@ nav.is-scrolled {
   margin-bottom: 0.15rem;
   color: var(--color-primary);
   font-weight: 600;
-}
-.prose-article .layer-content span {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  color: #57534e; /* stone-600 */
-  line-height: 1.5;
 }
 /* Slate-navy gradient: foundation (1) deepest → flex (6) lightest. */
 .prose-article .income-layer.layer-1 .layer-label { background: #1C4259; }
