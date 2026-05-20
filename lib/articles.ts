@@ -136,6 +136,50 @@ export const SATELLITES: ArticleMeta[] = [
   },
 ];
 
+// Utility (non-article) pages that are still CJGEO-hydrated.
+// /about is a full editorial page; /contact uses an intro-block; the home page
+// uses a "why this blog exists" intro block. /design-guide and /privacy stay
+// native — see scripts/README or the BryanBlog skill book for reasoning.
+export type UtilityArticleMeta = {
+  key: "about" | "contact" | "home-why";
+  title: string;
+  source: "cjgeo";
+  cjgeoArticleId?: string;
+  mainKeyword?: string;
+  adoptedAt?: string;
+  contentPath: string; // relative to repo root
+};
+
+export const UTILITY_ARTICLES: Record<string, UtilityArticleMeta> = {
+  about: {
+    key: "about",
+    title: "About Bryan Blog",
+    source: "cjgeo",
+    cjgeoArticleId: "77e09fcb-2efc-44c8-a473-46f6ec01a44a",
+    mainKeyword: "about retirement income blog plain english",
+    adoptedAt: "2026-05-20",
+    contentPath: "content/about/index.html",
+  },
+  contact: {
+    key: "contact",
+    title: "Contact Bryan",
+    source: "cjgeo",
+    cjgeoArticleId: "90c0f8b3-4dda-47ea-be01-ecbb92727c6e",
+    mainKeyword: "request retirement income review",
+    adoptedAt: "2026-05-20",
+    contentPath: "content/contact/intro.html",
+  },
+  "home-why": {
+    key: "home-why",
+    title: "Why This Blog Exists",
+    source: "cjgeo",
+    cjgeoArticleId: "23fba853-8d26-4438-86be-0ebf1df3f211",
+    mainKeyword: "plain english retirement planning advice",
+    adoptedAt: "2026-05-20",
+    contentPath: "content/home/why-this-blog-exists.html",
+  },
+};
+
 export function getSatellite(slug: string): ArticleMeta | undefined {
   return SATELLITES.find((s) => s.slug === slug);
 }

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { promises as fs } from "fs";
+import path from "path";
 import Hero from "@/components/Hero";
-import { PILLAR, SATELLITES } from "@/lib/articles";
+import { PILLAR, SATELLITES, UTILITY_ARTICLES } from "@/lib/articles";
 
 export const metadata = {
   title: "Plan Retirement Income With Confidence",
@@ -70,7 +72,11 @@ function TrustIcon({ kind }: { kind: string }) {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const whyHtml = await fs.readFile(
+    path.join(process.cwd(), UTILITY_ARTICLES["home-why"].contentPath),
+    "utf8"
+  );
   return (
     <main>
       <Hero
@@ -81,6 +87,14 @@ export default function HomePage() {
         photoSrc="/images/hero/kitchen-table-coffee.jpg"
         photoAlt="Hands holding a coffee mug on a warm wooden kitchen table, beside handwritten notes and reading glasses, soft window light."
       />
+
+      {/* Why this blog exists — CJGEO-hydrated editorial intro block. */}
+      <section className="max-w-3xl mx-auto px-6 pb-10 md:pb-14">
+        <div
+          className="prose-article"
+          dangerouslySetInnerHTML={{ __html: whyHtml }}
+        />
+      </section>
 
       {/* Featured pillar card — terracotta-bordered editorial callout */}
       <section className="max-w-6xl mx-auto px-6 pb-12 md:pb-16">

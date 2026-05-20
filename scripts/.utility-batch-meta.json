@@ -1,0 +1,38 @@
+[
+  {
+    "key": "about",
+    "articleId": "77e09fcb-2efc-44c8-a473-46f6ec01a44a",
+    "chosenKeyword": "about retirement income blog plain english",
+    "fullAutoOK": true,
+    "ready": true,
+    "failed": false,
+    "genWall": 126,
+    "wc": 837,
+    "outPath": "content/about/index.html",
+    "finishError": null
+  },
+  {
+    "key": "contact",
+    "articleId": "90c0f8b3-4dda-47ea-be01-ecbb92727c6e",
+    "chosenKeyword": "request retirement income review",
+    "fullAutoOK": true,
+    "ready": true,
+    "failed": false,
+    "genWall": 128,
+    "wc": 427,
+    "outPath": "content/contact/intro.html",
+    "finishError": null
+  },
+  {
+    "key": "home",
+    "articleId": "23fba853-8d26-4438-86be-0ebf1df3f211",
+    "chosenKeyword": "plain english retirement planning advice",
+    "fullAutoOK": true,
+    "ready": true,
+    "failed": false,
+    "genWall": 253,
+    "wc": 627,
+    "outPath": "content/home/why-this-blog-exists.html",
+    "finishError": null
+  }
+]
