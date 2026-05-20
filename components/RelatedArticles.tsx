@@ -15,7 +15,7 @@ export default function RelatedArticles({
 }) {
   if (!items?.length) return null;
   return (
-    <section className="mt-20 pt-10 border-t border-[var(--color-neutral-mid)]/40">
+    <section className="not-prose mt-20 pt-10 border-t border-[var(--color-neutral-mid)]/40">
       <p
         className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-6"
         style={{ color: "var(--color-accent)" }}

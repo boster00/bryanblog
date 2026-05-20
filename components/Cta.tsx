@@ -10,7 +10,7 @@ type CtaProps = {
 export default function Cta({ heading, body, href, label }: CtaProps) {
   return (
     <aside
-      className="my-14 rounded-2xl px-8 py-9 md:px-10 md:py-10 relative overflow-hidden"
+      className="not-prose my-14 rounded-2xl px-8 py-9 md:px-10 md:py-10 relative overflow-hidden"
       style={{
         backgroundColor: "var(--color-accent-tint)",
         border: "1px solid rgba(140, 58, 46, 0.18)",
@@ -32,8 +32,12 @@ export default function Cta({ heading, body, href, label }: CtaProps) {
         <div className="mt-6">
           <Link
             href={href}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-sm font-semibold tracking-wide transition-transform hover:-translate-y-0.5"
-            style={{ backgroundColor: "var(--color-accent)" }}
+            className="cta-button inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold tracking-wide transition-transform hover:-translate-y-0.5 no-underline"
+            style={{
+              backgroundColor: "var(--color-accent)",
+              color: "#ffffff",
+              textDecoration: "none",
+            }}
           >
             {label}
             <span aria-hidden>→</span>
