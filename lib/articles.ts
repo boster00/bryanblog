@@ -6,6 +6,10 @@ export type ArticleMeta = {
   href: string;
   title: string;
   teaser: string;
+  // CJGEO-hydrated satellites carry source tagging + traceability metadata.
+  source?: "cjgeo";
+  cjgeoArticleId?: string;
+  mainKeyword?: string;
 };
 
 export const PILLAR: ArticleMeta = {
@@ -22,6 +26,9 @@ export const SATELLITES: ArticleMeta[] = [
     href: "/retirement-income/monthly-income-needs/",
     title: "How Much Monthly Income Do I Need in Retirement?",
     teaser: "Translate today's spending into a realistic monthly retirement number.",
+    source: "cjgeo",
+    cjgeoArticleId: "30376b1c-18c8-425a-a28c-6ed444af656a",
+    mainKeyword: "how much monthly income do I need in retirement",
   },
   {
     slug: "retirement-paycheck",
