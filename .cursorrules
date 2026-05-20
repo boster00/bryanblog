@@ -1,0 +1,334 @@
+# .cursorrules — bryanblog operating manual for autonomous cloud agents
+
+You are a Cursor cloud agent working in the `boster00/bryanblog` repo. This file is the
+authoritative operating manual for any task that adds, replaces, or hydrates an article
+on bryanblog. The per-task NL prompt gives you the specific job; this file is the procedure.
+
+Read this file end-to-end ONCE at session start. The conventions are non-obvious enough
+that skipping ahead burns build cycles.
+
+## 1. What bryanblog is
+
+A Next.js 15 (app router) + React 19 + Tailwind 4 + TypeScript static content site for
+Bryan, a retirement-planning advisor. Audience: 55–75-year-olds anxious about running out
+of money. Voice: calm, plain English, 8th-grade reading level, compliance-conservative.
+Live at https://bryanblog.vercel.app/. Auto-deploys from `main`.
+
+## 2. Repo layout
+
+```
+app/
+  layout.tsx, page.tsx, globals.css       # globals.css has the Tailwind 4 @theme block
+  retirement-income/page.tsx              # pillar (decision-journey landing)
+  retirement-income/<slug>/page.tsx       # satellites (12 today)
+components/
+  ArticleShell.tsx                        # wraps article body, sticky TOC, hero
+  Cta.tsx, RelatedArticles.tsx            # both use `not-prose` internally
+content/
+  retirement-income/<slug>.html           # CJGEO-hydrated article body (source of truth)
+lib/
+  articles.ts                             # SATELLITES + PILLAR + UTILITY_ARTICLES metadata
+  sections.ts                             # extractSections() from h2 ids
+scripts/
+  adopt-portfolio-planning.mjs            # canonical reference adoption script
+next.config.mjs, package.json, tsconfig.json
+```
+
+Local dev port: 3004 (`npm run dev -- -p 3004`).
+
+## 3. Stack rules (non-negotiable)
+
+- **Tailwind 4**, configured via `@theme` in `app/globals.css`. NO `tailwind.config.js`. NO `@tailwindcss/typography`. The `.prose-article` class is HAND-WRITTEN in `globals.css`.
+- **`.prose-article` is greedy.** Any nested component with its own typography MUST use `not-prose` to opt out, or prose styles silently eat it. `<Cta>` and `<RelatedArticles>` already do this — don't break that.
+- **Server components by default.** Article pages are async server components that read HTML from `content/` at request time and inject via `dangerouslySetInnerHTML` inside `<ArticleShell>`.
+- **Trailing slashes** on internal hrefs (`/retirement-income/<slug>/`). Don't add `trailingSlash: true` to `next.config.mjs`.
+
+## 4. The pillar/satellite cluster model
+
+`/retirement-income/` is a pillar covering ONE decision journey ("Will my money last in retirement?"). 12 satellites live under `/retirement-income/<slug>/`, each branching from one of the pillar's section H2s. Section H2s are phrased the way a layperson would TYPE INTO ChatGPT/Google ("How much should I keep safe versus invested?"), not how a financial pro would label them.
+
+When adding a new satellite, it slots under `/retirement-income/<slug>/` and gets wired into `lib/articles.ts` via the SATELLITES array.
+
+## 5. Compliance + voice (HARD)
+
+- NO product names. NO insurer names. NO specific return projections (e.g. "5% annual"). NO uncaveated guarantees.
+- When mentioning annuity guarantees: ALWAYS append "subject to claims-paying ability".
+- CTA framing: "request a retirement income review" (advisor framing), NEVER "buy an annuity".
+- NO testimonials / endorsements / "what retirees say" sections.
+- Strip any of these from CJGEO-generated content during sanitize. They DO appear in raw output.
+
+## 6. Article-hydration pipeline (CJGEO → bryanblog)
+
+This is the canonical procedure. The reference implementation lives at
+`scripts/adopt-portfolio-planning.mjs` — READ IT before you write your own version. Your
+new article should follow the same sanitize → keepTopLevelBlocks → inject-h2-ids →
+inject-deep-dives → write-content-file → wire-route flow.
+
+For a NEW satellite the steps are:
+
+1. **Create a NEW CJGEO article via `full_auto`** (don't clone an existing CJGEO article body — generate fresh content with a fresh seed/brief).
+2. Set main keyword.
+3. Run keyword `full_auto` (optional but recommended for asset richness).
+4. Run topic `full_auto`.
+5. Run prompt `full_auto`.
+6. Kick off `generate_draft`.
+7. Poll `pull_status` every 60s until `ready` (max ~20 min — re-initiate if it hangs).
+8. Adopt the draft.
+9. Fetch `content_html` via `get_html`.
+10. Sanitize → keepTopLevelBlocks → inject h2 ids (slug-from-text) → inject deep-dive links → write to `content/retirement-income/<new-slug>.html` (with the article_id/keyword/adopted_at header comment).
+11. Create `app/retirement-income/<new-slug>/page.tsx` mirroring the portfolio-planning satellite pattern (async server component, reads from `content/`, wraps with `<ArticleShell>`, supplies `relatedFor([...sibling slugs])`).
+12. Update `lib/articles.ts`: append to `SATELLITES` with `slug`, `href`, `title`, `teaser`, `source: 'cjgeo'`, `cjgeoArticleId`, `mainKeyword`.
+13. `npm run build` — must be green. TS errors fail the build.
+14. `git add` + commit + `git push origin main`. Vercel auto-deploys.
+15. Verify the live URL renders (curl 200 + the body contains expected h2 ids).
+
+## 7. CJGEO HTTP wire spec (CANONICAL — use these, NOT older docs)
+
+- **Base URL:** `https://cjgeoai.com`
+- **Auth header (every request):** `x-api-key: <CJGEO_API_KEY>`. See section 11 for where the key is.
+- **Content-Type:** `application/json`
+
+### Create article
+```
+POST /api/v1/articles
+{ "title": "<Article Title>", "keyword": "<seed keyword>", "create": true }
+→ 201 { "article_id": "<uuid>", "imported": false }
+```
+
+### Set main keyword (commit)
+```
+POST /api/articles/{article_id}/keyword
+{ "action": "set_main_keyword", "main_keyword": "<phrase>" }
+→ 200 { "committed": true, "main_keyword": "<phrase>" }
+```
+
+### Read assets — **on article ROOT, NOT `/keyword`**
+```
+POST /api/articles/{article_id}
+{ "action": "get_assets" }
+→ 200 { "main_keyword", "keywords", "topics", "prompts", "status", ... }
+```
+
+### Read HTML — **on article ROOT**
+```
+POST /api/articles/{article_id}
+{ "action": "get_html" }
+→ 200 { "content_html": "<...>" }
+```
+
+### Keyword full_auto (default action — empty body)
+```
+POST /api/articles/{article_id}/keyword
+{}
+→ 200 { "committed": true, "summary": {...} }
+```
+
+### Topic full_auto (default action — empty body)
+```
+POST /api/articles/{article_id}/topic
+{}
+→ 200 { "committed": true, ... }
+```
+
+### Prompt full_auto (default action — empty body)
+```
+POST /api/articles/{article_id}/prompt
+{}
+→ 200 { "committed": true, ... }
+```
+
+### Generate draft (async — returns 202)
+```
+POST /api/articles/{article_id}/edit-draft
+{
+  "action": "generate_draft",
+  "mode": "new_draft",
+  "use_default_context_prompt": false,
+  "context_prompt": "<your brief — see section 8>",
+  "generation_prompt_mode": "default",
+  "allow_image_generation": false
+}
+→ 202 { "article_id", "status": "generating", "poll", "chat_id" }
+```
+
+### Poll draft status
+```
+POST /api/articles/{article_id}/edit-draft
+{ "action": "pull_status" }
+→ 200 { "status": "ready" | "not_ready" }
+```
+
+### Adopt draft (commits content_html)
+```
+POST /api/articles/{article_id}/edit-draft
+{ "action": "adopt_draft" }
+→ 200 { "committed": true, "status": "adopted", "length": <n> }   # if ready
+→ 200 { "status": "not_ready" }                                    # if not ready (NOT 409)
+```
+
+**Wire quirks (locked):** keyword full_auto works in production as of commit `f41bf6a`. `get_html` and `get_assets` are on `/api/articles/{id}`, NOT on `/edit-draft`. `adopt_draft` returns HTTP 200 with `status:"not_ready"` (not 409) if the draft isn't ready — treat as a no-op and keep polling.
+
+## 8. Generating a fresh article (NOT cloning)
+
+When the task says "replicate X as X-2 with fresh content", DO NOT pull X's HTML and reuse it. Instead:
+
+1. `create` a new article with a fresh title.
+2. `set_main_keyword`.
+3. Compose a fresh `context_prompt` that describes the article's INTENT and STRUCTURE (audience, voice, sections to cover) — but do NOT paste the original article's HTML or sentences. CJGEO will generate new prose from the context_prompt. Example:
+   ```
+   Audience: 55-75 year old approaching or in retirement, anxious about
+   running out of money, not a financial pro. Voice: calm, plain English,
+   8th-grade reading level, compliance-conservative (no product/insurer
+   names, no return projections, no uncaveated guarantees).
+   Topic: how retirement income annuities fit inside a broader portfolio
+   plan. Cover: what role an income annuity plays in a diversified
+   portfolio; how to size the annuity sleeve vs. growth/safe sleeves;
+   sequence-of-returns risk and how guarantees absorb it; trade-offs
+   (liquidity, fees, lost upside); a decision-checklist framing.
+   CTA framing: "request a retirement income review" — advisor framing,
+   NEVER "buy".
+   ```
+4. `generate_draft` with `context_prompt` set. Set `use_default_context_prompt: false` and `generation_prompt_mode: "default"`. Set `allow_image_generation: false` (bryanblog doesn't currently render CJGEO-emitted `<img>` tags — they get stripped during sanitize).
+
+## 9. HTML sanitizer (mirror `scripts/adopt-portfolio-planning.mjs`)
+
+The raw CJGEO HTML has lots of cruft. Sanitize through these passes (in order):
+
+1. **Strip wrappers + chrome:** `<!DOCTYPE>`, `<html>`, `<head>`, `<body>`, `<main>`, `<article>`, `<style>`, `<script>`, `<svg>`, HTML comments, `<aside>`, `<nav>`, `<header>`, `<footer>`, `<link>`, `<meta>`, `<title>`, `<img>`, `<picture>`, `<figure>`. Also any `<section class="hero">` or `<section class="footer-cta">`. Also in-body `<h1>` (the title renders in ArticleShell separately).
+2. **Unwrap `<div>` and `<section>`** recursively until none remain.
+3. **Strip all attributes** from surviving tags EXCEPT `href` on `<a>`.
+4. **Whitelist tags:** `h2 h3 p ul ol li strong em a table thead tbody tr th td hr blockquote b i br`. Drop everything else (tag-only, preserving inner text where it makes sense — but step 5 will catch loose text).
+5. **Strip orphan lead text** before the first `<p>` or `<h2>`.
+6. **keepTopLevelBlocks:** walk the result and emit ONLY whitelisted top-level block elements (`h2 h3 p ul ol table blockquote hr`), dropping interstitial bare text nodes between blocks. This is the critical step that prevents leaked unstyled text fragments — CJGEO emits raw prose under `<div>`/`<section>` without `<p>` wrappers; after unwrap you have orphan text floating between elements.
+7. **Drop trailing CTA-style h2** that mentions "ready", "get started", or "calculate your" (matches CJGEO footer-cta).
+8. **Drop testimonials sections** ("What Retirees Say...") — compliance.
+9. **Drop calculator widget remnants** ("Calculator Inputs" h3, "Your Estimated Income" h3+ul, "Monthly Income Comparison" labels).
+
+After sanitize, run **inject-h2-ids** (slug-from-text: lowercase, replace whitespace with `-`, strip punctuation, dedupe with `-2`, `-3` suffix). Then optionally run **inject-deep-dive-links** to append one `<p><em>→ Deep dive: <a href="/retirement-income/<sibling-slug>/">Sibling Title</a></em></p>` after each section's last `</p>`, picking siblings by keyword match.
+
+Write the result to `content/retirement-income/<new-slug>.html` with this header:
+
+```html
+<!--
+  CJGEO-generated article body.
+  article_id: <uuid>
+  main_keyword: <chosen>
+  adopted_at: <YYYY-MM-DD>
+-->
+```
+
+## 10. page.tsx pattern (canonical — copy from portfolio-planning)
+
+```tsx
+import { promises as fs } from "fs";
+import path from "path";
+import ArticleShell from "@/components/ArticleShell";
+import { getSatellite, relatedFor } from "@/lib/articles";
+import { extractSections } from "@/lib/sections";
+
+const meta = getSatellite("<new-slug>")!;
+
+export const metadata = {
+  title: meta.title,
+  description: meta.teaser,
+};
+
+export default async function Page() {
+  const htmlPath = path.join(
+    process.cwd(),
+    "content/retirement-income/<new-slug>.html"
+  );
+  const html = await fs.readFile(htmlPath, "utf8");
+  const sections = extractSections(html);
+
+  return (
+    <main>
+      <ArticleShell
+        eyebrow="Retirement Income"
+        title={meta.title}
+        intro={meta.teaser}
+        sections={sections}
+        relatedArticles={relatedFor([
+          "<sibling-slug-1>",
+          "<sibling-slug-2>",
+          "<sibling-slug-3>",
+        ])}
+      >
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </ArticleShell>
+    </main>
+  );
+}
+```
+
+The `<div>` with `dangerouslySetInnerHTML` lives inside `<ArticleShell>`, which wraps it in `.prose-article max-w-[70ch]`. `<RelatedArticles>` is rendered by ArticleShell at the end, INSIDE `.prose-article` but using its own `not-prose` wrapper. Don't fold related-articles markup into the adopted HTML body.
+
+## 11. Credentials
+
+API keys are not in this repo. Pull them via `vercel env pull` (the key was added to Production + Preview):
+
+```bash
+vercel env pull .env.local --environment=production --yes
+```
+
+Then `.env.local` will have `CJGEO_API_KEY`. Load via `node --env-file=.env.local` for any one-shot script. Also `vercel link` may be required first if the project isn't linked — it is `bryanblog` under team `cjs-projects-963e3b09`.
+
+If `vercel env pull` is not authorized in the cloud VM, the task is blocked: report it via the dispatcher path (see section 14). Do NOT hard-code the API key inline. Do NOT commit `.env.local` — `.gitignore` excludes it.
+
+## 12. Build-as-fix discipline
+
+- **Tight foreground poll loop:** when waiting on `generate_draft`, poll every 60s. Don't pause to "await notification". Cap at 20 minutes; if still `not_ready`, re-call `generate_draft` with the same settings and reset the elapsed clock.
+- **3-strike rule:** if the same blocker repeats 3 times (same API error, same build error, same compliance violation), STOP looping. Report the blocker via section 14 with a clean unblock_path. Don't fake completion.
+- **Run npm run build foreground BEFORE pushing.** Wait for it. TS errors fail the build. Fix them; don't push red.
+
+## 13. Commit + push
+
+```bash
+git add -A   # OK on this repo — there are no secrets that aren't gitignored
+git commit -m "$(cat <<'EOF'
+feat(bryanblog): hydrate /retirement-income/<new-slug>/ as new CJGEO satellite
+
+article_id: <uuid>
+main_keyword: <chosen>
+
+EOF
+)"
+git push origin main
+```
+
+Do NOT use `--no-verify`. If pre-commit hooks fail, fix the issue and create a NEW commit; don't amend or skip hooks.
+
+## 14. Reporting back to the dispatcher
+
+When you finish (success or blocker), the chaperone reads your final assistant message from the Cursor API conversation endpoint. Make it a clean structured block:
+
+```
+STATUS: success | blocked | partial
+ARTICLE_ID: <uuid>
+COMMIT_SHA: <git rev-parse HEAD>
+BUILD: green | red
+URL: https://bryanblog.vercel.app/retirement-income/<new-slug>/
+BLOCKERS (if any): <one-line each>
+NEXT-STEP-FOR-CHAPERONE (if blocked): <what to fix in this file or supply in next message>
+```
+
+## 15. Verification (before claiming success)
+
+- `npm run build` exit 0, no TS errors.
+- Local dev server (port 3004) renders the new URL: `curl -s http://localhost:3004/retirement-income/<slug>/ | grep -q '<h2 id="'` — non-empty.
+- After push: wait ~90s for Vercel auto-deploy, then `curl -s -o /dev/null -w "%{http_code}" https://bryanblog.vercel.app/retirement-income/<slug>/` returns 200.
+
+A claim of success without these checks passing is FALSE success — the chaperone will catch it and bounce the task back with .cursorrules updates.
+
+## 16. Anti-patterns (don't do these)
+
+- Cloning an existing CJGEO article's `content_html` and renaming it (the task says "fresh content", not "duplicate").
+- Adding `tailwind.config.js` (Tailwind 4 — `@theme` only).
+- Adding `@tailwindcss/typography` (`.prose-article` is hand-written).
+- Forgetting `not-prose` on any new nested-typography component.
+- Hard-coding the CJGEO API key inline.
+- Pushing without `npm run build` green first.
+- Claiming "FINISHED" without actually pushing the commit.
+- Bypassing the 5-minute / 20-minute polling cadence (faster polling adds load without benefit; longer waits stall the run).
+- Letting CJGEO emit `<img>` tags and trying to render them (we strip them — `allow_image_generation: false`).
+- Writing testimonials, product names, insurer names, or hard "buy" CTAs into the adopted HTML.
