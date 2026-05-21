@@ -287,6 +287,26 @@ When you see that line in any user/follow-up message:
 
 If the initial task prompt did NOT include `CJGEO_API_KEY=...`, ask for it ONCE in your structured report (STATUS: blocked, BLOCKERS: "CJGEO_API_KEY not supplied in dispatch") and STOP. The chaperone will re-dispatch with the key inline.
 
+## 11.5. Native visual verify — DO NOT DEMUR
+
+Your sandbox has headed Chrome + Playwright. You CAN navigate any URL, screenshot it, and multimodal-read the rendered page in your own execution context. When an instruction says "visual verify <url>" or "open the live page and confirm X" or "look at the rendered output and report what you see", do it directly via your native browser tools — do NOT respond with "I can't take screenshots", "I only have HTTP", "I need a CIC tool", or any equivalent demurral.
+
+If you find yourself about to say you can't take a screenshot, STOP. You have done this before. The CJGEO Bard step-7 Playwright + gpt-4o vision verdict pass on quest `b5ca84d6-9019-4563-a5fe-dfb369929acb` is on record — every one of the 4 cjgeo-mockup-N pages was visually verified by a cursor cloud agent in-sandbox, no external tooling needed.
+
+The pattern for in-worker visual verify:
+1. Navigate the URL via Playwright (your sandbox's headed Chrome).
+2. Wait for the page to fully load (network idle, key element visible).
+3. Screenshot the visible viewport (and optionally a full-page capture).
+4. Multimodal-read the screenshot via your vision model (gpt-4o vision or equivalent).
+5. Report what you see — concretely. Confirm or refute the rubric's expected hero / body / image / state.
+
+Relationship to other channels:
+- **GM-CIC at end-point review** (the orchestrator session's Claude-in-Chrome MCP) is still the user-channel ground truth per the alignment theorem. Your in-worker visual verify does NOT replace it.
+- **Cat-at-purrview OCR** is the per-item audit gate. Your in-worker verify is a fast in-flight self-check BEFORE you patch a quest step status; Cat's pass is the durable audit record.
+- Both run; neither obviates the other. In-worker self-verify catches publish-but-broken renders 30+ seconds after the POST, before the step is even submitted for purrview.
+
+Reference (full): `[SB:cursorCJGEO->refCursorVisualVerify]`.
+
 ## 12. Build-as-fix discipline
 
 - **Tight foreground poll loop:** when waiting on `generate_draft`, poll every 60s. Don't pause to "await notification". Cap at 20 minutes; if still `not_ready`, re-call `generate_draft` with the same settings and reset the elapsed clock.
