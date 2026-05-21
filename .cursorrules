@@ -307,6 +307,34 @@ Relationship to other channels:
 
 Reference (full): `[SB:cursorCJGEO->refCursorVisualVerify]`.
 
+## 11.6. Bosterbio default — use_custom_template:true + content-section verify (LOCKED 2026-05-21)
+
+cursorCJGEO's PRIMARY job is bosterbio.com proving-grounds adoption. The bosterbio downstream sanitizer ([SB:bosterbio->adoptCJGEOIntoMagentoPage]) is preserve-first: it relies on CJGEO's custom-template assembly path to emit a `content-section` class wrapper PLUS the rest of the bespoke design surface. Default-template output is INCOMPATIBLE — it renders as the unstyled fallback that `cjgeo-mockup-1`'s prior stale publish produced.
+
+**Rule 1 — Always pass `use_custom_template:true` on `generate_draft` for bosterbio targets.** The `POST /api/articles/{id}/edit-draft {action:'generate_draft', ...}` body MUST include `use_custom_template:true`. Omitting it is a discipline failure — the resulting article cannot be sanitized + published downstream.
+
+```json
+{
+  "action": "generate_draft",
+  "mode": "full_html",
+  "allow_image_generation": true,
+  "use_default_context_prompt": true,
+  "generation_prompt_mode": "auto",
+  "use_custom_template": true
+}
+```
+
+**Rule 2 — Verify `content-section` in `content_html` BEFORE sanitize/publish.** After `adopt_draft` (or after `POST /api/articles/{id} {action:'get_html'}`), grep the body for the literal string `content-section`. This is the marker that the draft was assembled via the custom-templates path.
+
+- count > 0 → COMPLIANT. Proceed to sanitize + publish.
+- count = 0 → NON-COMPLIANT. Regenerate per Rule 3.
+
+**Rule 3 — Regenerate-on-fail loop (max 3 attempts).** If Rule 2 returns count = 0: POST `/api/articles/{id}/edit-draft {action:'generate_draft', use_custom_template:true, ...}` → poll (60s, cap 20 min) → adopt → re-fetch get_html → re-grep. Cap at 3 attempts. After 3 attempts without compliance → `STATUS: blocked` with `BLOCKERS: content-section absent after 3 regenerates`. Do NOT ship a non-compliant article.
+
+Co-locked with [SB:bosterbio->adoptCJGEOIntoMagentoPage] pre-sanitize compliance verify — neither side can publish a non-compliant article unilaterally.
+
+Reference (full): `[SB:cursorCJGEO->refBosterbioDefault]`.
+
 ## 12. Build-as-fix discipline
 
 - **Tight foreground poll loop:** when waiting on `generate_draft`, poll every 60s. Don't pause to "await notification". Cap at 20 minutes; if still `not_ready`, re-call `generate_draft` with the same settings and reset the elapsed clock.
