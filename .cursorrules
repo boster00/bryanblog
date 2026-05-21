@@ -307,9 +307,11 @@ Relationship to other channels:
 
 Reference (full): `[SB:cursorCJGEO->refCursorVisualVerify]`.
 
-## 11.6. Bosterbio default — use_custom_template:true + content-section verify (LOCKED 2026-05-21)
+## 11.6. Bosterbio default — use_custom_template:true + Boster template class verify (LOCKED 2026-05-21; route hydration live at cjgeo `22fedb6d`)
 
-cursorCJGEO's PRIMARY job is bosterbio.com proving-grounds adoption. The bosterbio downstream sanitizer ([SB:bosterbio->adoptCJGEOIntoMagentoPage]) is preserve-first: it relies on CJGEO's custom-template assembly path to emit a `content-section` class wrapper PLUS the rest of the bespoke design surface. Default-template output is INCOMPATIBLE — it renders as the unstyled fallback that `cjgeo-mockup-1`'s prior stale publish produced.
+cursorCJGEO's PRIMARY job is bosterbio.com proving-grounds adoption. The bosterbio downstream sanitizer ([SB:bosterbio->adoptCJGEOIntoMagentoPage]) is preserve-first: it relies on CJGEO's custom-template assembly path to emit the Boster template class surface (`hero-section`, `col-md-4`, `dark-overlap`, `font-large`, `card-item`, `row-of-cards`, `hero-twin`, `font-bold`) PLUS the inline `<style data-draft-styles>` block. Default-template output is INCOMPATIBLE — it renders as the unstyled fallback that `cjgeo-mockup-1`'s prior stale publish produced.
+
+**Route prerequisite — cjgeo commit `22fedb6d`** (deployed 2026-05-21). The patch makes `use_custom_template:true` actually hydrate the requesting user profile's Boster templates (21 custom templates incl. 8 Boster ones for the Bard profile). Do NOT roll back through that commit.
 
 **Rule 1 — Always pass `use_custom_template:true` on `generate_draft` for bosterbio targets.** The `POST /api/articles/{id}/edit-draft {action:'generate_draft', ...}` body MUST include `use_custom_template:true`. Omitting it is a discipline failure — the resulting article cannot be sanitized + published downstream.
 
@@ -324,12 +326,12 @@ cursorCJGEO's PRIMARY job is bosterbio.com proving-grounds adoption. The bosterb
 }
 ```
 
-**Rule 2 — Verify `content-section` in `content_html` BEFORE sanitize/publish.** After `adopt_draft` (or after `POST /api/articles/{id} {action:'get_html'}`), grep the body for the literal string `content-section`. This is the marker that the draft was assembled via the custom-templates path.
+**Rule 2 — Verify Boster template signature classes in `content_html` BEFORE sanitize/publish.** After `adopt_draft` (or after `POST /api/articles/{id} {action:'get_html'}`), grep the body for ANY of the Boster template signature classes: `hero-section`, `col-md-4`, `dark-overlap`, `font-large`, `card-item`, `row-of-cards`, `hero-twin`, `font-bold`. Sum occurrences across all eight.
 
-- count > 0 → COMPLIANT. Proceed to sanitize + publish.
-- count = 0 → NON-COMPLIANT. Regenerate per Rule 3.
+- TOTAL >= 1 → COMPLIANT. Proceed to sanitize + publish.
+- TOTAL = 0 → NON-COMPLIANT. Regenerate per Rule 3.
 
-**Rule 3 — Regenerate-on-fail loop (max 3 attempts).** If Rule 2 returns count = 0: POST `/api/articles/{id}/edit-draft {action:'generate_draft', use_custom_template:true, ...}` → poll (60s, cap 20 min) → adopt → re-fetch get_html → re-grep. Cap at 3 attempts. After 3 attempts without compliance → `STATUS: blocked` with `BLOCKERS: content-section absent after 3 regenerates`. Do NOT ship a non-compliant article.
+**Rule 3 — Regenerate-on-fail loop (max 3 attempts).** If Rule 2 returns TOTAL = 0: POST `/api/articles/{id}/edit-draft {action:'generate_draft', use_custom_template:true, ...}` → poll (60s, cap 20 min) → adopt → re-fetch get_html → re-grep. Cap at 3 attempts. After 3 attempts without compliance → `STATUS: blocked` with `BLOCKERS: Boster template classes absent after 3 regenerates` and per-class counts. Do NOT ship a non-compliant article.
 
 Co-locked with [SB:bosterbio->adoptCJGEOIntoMagentoPage] pre-sanitize compliance verify — neither side can publish a non-compliant article unilaterally.
 
