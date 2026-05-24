@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+
+const NEXUS_BASE = "https://bosternexus.vercel.app";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +41,15 @@ export default function RootLayout({
         <SiteNav />
         <div className="flex-1">{children}</div>
         <SiteFooter />
+        {/* Nexus Analytics client SDK — auto-captures scroll depth,
+            outbound clicks, time-on-page. Server pageviews still flow via
+            middleware.ts → /api/na/ingest. */}
+        <Script
+          src={`${NEXUS_BASE}/na.js`}
+          data-site="protectandgrow.blog"
+          data-nexus={NEXUS_BASE}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
