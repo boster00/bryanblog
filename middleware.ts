@@ -48,8 +48,13 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
   const is_new_session = !existingSid;
 
   const res = NextResponse.next();
+  // NOTE: cookies are intentionally NOT httpOnly. The client-side SDK
+  // (/na.js) needs to read na_vid + na_sid via document.cookie so server
+  // events and client events share the same visitor/session identity.
+  // These cookies hold opaque UUIDs only — no security-sensitive data —
+  // so JS read access is fine.
   const cookieBase = {
-    httpOnly: true,
+    httpOnly: false,
     sameSite: 'lax' as const,
     secure: true,
     path: '/',
