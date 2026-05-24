@@ -59,9 +59,11 @@ export function middleware(req: NextRequest, event: NextFetchEvent) {
     secure: true,
     path: '/',
   };
-  if (is_new_visitor) {
-    res.cookies.set(VISITOR_COOKIE, visitor_id, { ...cookieBase, maxAge: VISITOR_MAX_AGE });
-  }
+  // Always re-write na_vid (not just on is_new_visitor) so that any
+  // legacy httpOnly cookie from a previous deploy gets overwritten with
+  // the new JS-readable cookie. After all clients have rolled, this is
+  // also harmless (same value, same attrs).
+  res.cookies.set(VISITOR_COOKIE, visitor_id, { ...cookieBase, maxAge: VISITOR_MAX_AGE });
   // Always refresh session expiry (sliding 30-min window).
   res.cookies.set(SESSION_COOKIE, session_id, { ...cookieBase, maxAge: SESSION_MAX_AGE });
 
